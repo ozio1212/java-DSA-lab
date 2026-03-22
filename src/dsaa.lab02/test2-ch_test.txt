@@ -1,0 +1,17 @@
+go 3
+ch 0
+ld doc_zero
+link=pierwszy_w_zerze link=drugi_w_zerze
+eod
+ch 1
+ld doc_jeden
+link=tylko_jeden
+eod
+ch 0
+show
+ch 1
+add dorzucony
+show
+ch 0
+size
+ha

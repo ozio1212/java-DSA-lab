@@ -1,0 +1,20 @@
+testowy pliczek
+
+dobre linki:
+ale cool link=superszy_link
+yutaj mamy zwykly poprawny link w srodku zdania: link=Poprawny_Link123 i cos dalej tutaj w lijince
+tutaj link z duzymi literami w prefiksie:       LInK=Inny_Link_456
+w jednej linii moga byc dwa linki: link=Pierwszy link=drugi_2
+
+błędne linki:
+zaczyna sie od cyfry: link=1zlyLink
+zaczyna sie od podkreslenia         : link=_zlyLink
+ma niedozwolone znaki: link=Zly-Link albo link=zly!link oraz link=zly.link
+pusty identyfikator: link=
+prawie jak link, ale nie do konca: linka=ToNieLink
+
+krotki, ale poprawny: link=A
+
+eod
+
+tego na juz nie powinno wczytac bo bylo eod: link=NiewidzialnyLink

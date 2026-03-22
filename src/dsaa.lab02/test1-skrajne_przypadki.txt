@@ -1,0 +1,13 @@
+go 2
+ld pusty_doc
+eod
+show
+size
+get 0
+remi 0
+rem nie_ma_mnie
+addi 1 zly_indeks
+addi 0 pierwszy
+clear
+size
+ha

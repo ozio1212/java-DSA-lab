@@ -1,0 +1,12 @@
+go 1
+ld duplikaty
+link=x link=y link=x link=z
+eod
+show
+index x
+rem x
+show
+index x
+set 2 nowyx
+show
+ha
