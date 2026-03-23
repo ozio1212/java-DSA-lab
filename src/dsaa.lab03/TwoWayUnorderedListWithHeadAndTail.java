@@ -61,7 +61,11 @@ public class TwoWayUnorderedListWithHeadAndTail<E> implements IList<E>{
 
 		@Override
 		public boolean hasPrevious() {
-			return (p!=null) ? p.prev!=null : tail!=null;
+			if (p != null) {
+				return p.prev != null;
+			} else {
+				return tail != null;
+			}
 		}
 
 		@Override
