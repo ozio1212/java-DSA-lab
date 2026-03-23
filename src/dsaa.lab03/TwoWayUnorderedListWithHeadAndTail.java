@@ -231,10 +231,9 @@ public class TwoWayUnorderedListWithHeadAndTail<E> implements IList<E>{
 	public int size() {
 		return size;
 	}
-	
+
 	public String toStringReverse() {
 		ListIterator<E> iter=new InnerListIterator();
-
 
 		while(iter.hasNext()) {
 			iter.next();
