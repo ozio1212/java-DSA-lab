@@ -131,8 +131,14 @@ public class Main {
 				int number=Integer.parseInt(word[1]);
 			    doc[currentDocNo].link.add(doc[number].link);
 				continue;
-			}				
-			System.out.println("Wrong command");			
+			}
+            // mvend <n>
+            if(word[0].equalsIgnoreCase("mvend") && word.length==2) {
+                int numb=Integer.parseInt(word[1]);
+                doc[currentDocNo].link.moveEnd(numb);
+                continue;
+            }
+            System.out.println("Wrong command");
 		}
 		System.out.println("END OF EXECUTION");
 		scan.close();

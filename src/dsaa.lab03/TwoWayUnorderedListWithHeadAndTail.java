@@ -294,5 +294,24 @@ public class TwoWayUnorderedListWithHeadAndTail<E> implements IList<E>{
 		}
 		size--;
 	}
+
+    public void moveEnd(int n){
+        
+        if (n<0 || n>=size || isEmpty()) {
+            throw new NoSuchElementException();
+        }
+
+        TwoWayUnorderedListWithHeadAndTail<E> temp = new TwoWayUnorderedListWithHeadAndTail<>();
+
+        // nowa lista z tymi pierwszymi n-elementami i odciecie ich od pierwotnej listy
+        for (int i = 0; i < n; i++) {
+            temp.add(0,this.remove(0));
+        }
+
+        // dodanie do pierwotnej listy nowej odworocnej
+        this.add(temp);
+    }
+
+
 }
 
