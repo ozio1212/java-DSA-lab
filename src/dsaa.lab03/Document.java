@@ -68,8 +68,8 @@ public class Document{
 	}
 	
 	public String toStringReverse() {
-		String retStr="Document: "+name;
-		return retStr+link.toStringReverse();
+		String str ="Document: "+name;
+		return str +link.toStringReverse();
 	}
 
 }
