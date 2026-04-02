@@ -67,7 +67,7 @@ public class TwoWayCycledOrderedListWithSentinel<E> implements IList<E>{
 		Element current;
 
 		public InnerListIterator() {
-			this.current = sentinel;
+			this.current = sentinel.next;
 		}
 
 		@Override
@@ -126,11 +126,20 @@ public class TwoWayCycledOrderedListWithSentinel<E> implements IList<E>{
 		size = 0;
 	}
 
-	//@SuppressWarnings("unchecked")
+	@SuppressWarnings("unchecked")
 	@Override
 	public boolean add(E e) {
-		//TODO
-		return false;
+		Comparable<E> comparable = (Comparable<E>) e;
+		Element current = sentinel.next;
+
+		while (current != sentinel && comparable.compareTo(current.object) >= 0) {
+			current = current.next;
+		}
+
+		Element newElement = new Element(e);
+		current.prev.addAfter(newElement);
+		size++;
+		return true;
 	}
 
 	private Element getElement(int index) {
@@ -233,14 +242,46 @@ public class TwoWayCycledOrderedListWithSentinel<E> implements IList<E>{
 		return size;
 	}
 
-	//@SuppressWarnings("unchecked")
+	@SuppressWarnings("unchecked")
 	public void add(TwoWayCycledOrderedListWithSentinel<E> other) {
-		//TODO
+
+		if (this == other || other.isEmpty()) return;
+
+		Element myCurrent = this.sentinel.next;
+		Element otherCurrent = other.sentinel.next;
+
+		while (otherCurrent != other.sentinel) {
+			Element nextOther = otherCurrent.next;
+			Comparable<E> comparable = (Comparable<E>) otherCurrent.object;
+
+			while (myCurrent != this.sentinel && comparable.compareTo(myCurrent.object) >= 0) {
+				myCurrent = myCurrent.next;
+			}
+
+			myCurrent.prev.addAfter(otherCurrent);
+			this.size++;
+
+			otherCurrent = nextOther;
+
+		}
+
+		other.clear();
 	}
 	
 	//@SuppressWarnings({ "unchecked", "rawtypes" })
 	public void removeAll(E e) {
-		//TODO
+		Element current = sentinel.next;
+
+		while (current != sentinel) {
+			Element nextElement = current.next;
+
+			if (current.object.equals(e)) {
+				current.remove();
+				size--;
+			}
+
+			current = nextElement;
+		}
 	}
 
 }
