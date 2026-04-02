@@ -7,25 +7,35 @@ public class TwoWayCycledOrderedListWithSentinel<E> implements IList<E>{
 
 	private class Element{
 		public Element(E e) {
-			//TODO
+			this.object = e;
 		}
 		public Element(E e, Element next, Element prev) {
-			//TODO
+			this.object = e;
+			this.next = next;
+			this.prev = prev;
 		}
 		// add element e after this
 		public void addAfter(Element elem) {
-			//TODO
+			elem.next = this.next;
+			elem.prev = this;
+			this.next.prev = elem;
+			this.next = elem;
 		}
 		// assert it is NOT a sentinel
 		public void remove() {
-			//TODO
+			if (this == sentinel){
+				return;
+			}
+			this.prev.next = this.next;
+			this.next.prev = this.prev;
 		}
+
 		E object;
 		Element next=null;
 		Element prev=null;
 	}
 
-
+	// pola listy
 	Element sentinel;
 	int size;
 
@@ -52,6 +62,7 @@ public class TwoWayCycledOrderedListWithSentinel<E> implements IList<E>{
 		public InnerListIterator() {
 			//TODO
 		}
+
 		@Override
 		public boolean hasNext() {
 			//TODO
@@ -63,24 +74,29 @@ public class TwoWayCycledOrderedListWithSentinel<E> implements IList<E>{
 			//TODO
 			return null;
 		}
+
 		@Override
 		public void add(E arg0) {
 			throw new UnsupportedOperationException();
 		}
+
 		@Override
 		public boolean hasPrevious() {
 			//TODO
 			return false;
 		}
+
 		@Override
 		public int nextIndex() {
 			throw new UnsupportedOperationException();
 		}
+
 		@Override
 		public E previous() {
 			//TODO
 			return null;
 		}
+
 		@Override
 		public int previousIndex() {
 			throw new UnsupportedOperationException();
@@ -116,10 +132,7 @@ public class TwoWayCycledOrderedListWithSentinel<E> implements IList<E>{
 	}
 
 	@Override
-	public void add(int index, E element) {
-		throw new UnsupportedOperationException();
-
-	}
+	public void add(int index, E element) {throw new UnsupportedOperationException();}
 
 	@Override
 	public void clear() {
