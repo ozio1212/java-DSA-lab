@@ -296,7 +296,7 @@ public class TwoWayUnorderedListWithHeadAndTail<E> implements IList<E>{
 	}
 
     public void moveEnd(int n){
-        
+
         if (n<0 || n>=size || isEmpty()) {
             throw new NoSuchElementException();
         }
