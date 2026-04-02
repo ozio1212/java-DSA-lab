@@ -2,6 +2,7 @@ package dsaa.lab04;
 
 import java.util.Iterator;
 import java.util.ListIterator;
+import java.util.NoSuchElementException;
 
 public class TwoWayCycledOrderedListWithSentinel<E> implements IList<E>{
 
@@ -40,39 +41,46 @@ public class TwoWayCycledOrderedListWithSentinel<E> implements IList<E>{
 	int size;
 
 	private class InnerIterator implements Iterator<E>{
-		//TODO
+
+		Element pos;
+
 		public InnerIterator() {
-			//TODO
+			this.pos = sentinel.next;
 		}
+
 		@Override
 		public boolean hasNext() {
-			//TODO
-			return false;
+			return pos != sentinel;
 		}
 
 		@Override
 		public E next() {
-			//TODO
-			return null;
+			if (!hasNext()) throw new NoSuchElementException();
+			E value = pos.object;
+			pos = pos.next;
+			return value;
 		}
 	}
 
 	private class InnerListIterator implements ListIterator<E>{
-		//TODO
+
+		Element current;
+
 		public InnerListIterator() {
-			//TODO
+			this.current = sentinel;
 		}
 
 		@Override
 		public boolean hasNext() {
-			//TODO
-			return false;
+			return current != sentinel;
 		}
 
 		@Override
 		public E next() {
-			//TODO
-			return null;
+			if (!hasNext()) throw new NoSuchElementException();
+			E value = current.object;
+			current = current.next;
+			return value;
 		}
 
 		@Override
@@ -82,8 +90,7 @@ public class TwoWayCycledOrderedListWithSentinel<E> implements IList<E>{
 
 		@Override
 		public boolean hasPrevious() {
-			//TODO
-			return false;
+			return current.prev != sentinel;
 		}
 
 		@Override
@@ -93,8 +100,9 @@ public class TwoWayCycledOrderedListWithSentinel<E> implements IList<E>{
 
 		@Override
 		public E previous() {
-			//TODO
-			return null;
+			if (!hasPrevious()) throw new NoSuchElementException();
+			current = current.prev;
+			return current.object;
 		}
 
 		@Override
@@ -110,8 +118,12 @@ public class TwoWayCycledOrderedListWithSentinel<E> implements IList<E>{
 			throw new UnsupportedOperationException();
 		}
 	}
+
 	public TwoWayCycledOrderedListWithSentinel() {
-		//TODO
+		sentinel = new Element(null);
+		sentinel.next = sentinel;
+		sentinel.prev = sentinel;
+		size = 0;
 	}
 
 	//@SuppressWarnings("unchecked")
@@ -122,12 +134,25 @@ public class TwoWayCycledOrderedListWithSentinel<E> implements IList<E>{
 	}
 
 	private Element getElement(int index) {
-		//TODO
-		return null;
+		if (index < 0 || index >= size) {
+			throw new NoSuchElementException();
+		}
+		Element current = sentinel.next;
+		for (int i  = 0; i < index; i++) {
+			current = current.next;
+		}
+		return current;
 	}
 
 	private Element getElement(E obj) {
-		//TODO
+		Element current = sentinel.next;
+
+		while (current != sentinel) {
+			if (current.object.equals(obj)) {
+				return current;
+			}
+			current = current.next;
+		}
 		return null;
 	}
 
@@ -136,36 +161,42 @@ public class TwoWayCycledOrderedListWithSentinel<E> implements IList<E>{
 
 	@Override
 	public void clear() {
-		//TODO
+		sentinel.next = sentinel;
+		sentinel.prev = sentinel;
+		size = 0;
 	}
 
 	@Override
 	public boolean contains(E element) {
-		//TODO
-		return false;
+		return indexOf(element) != -1;
 	}
 
 	@Override
 	public E get(int index) {
-		//TODO
-		return null;
+		return getElement(index).object;
 	}
 
 	@Override
-	public E set(int index, E element) {
-		throw new UnsupportedOperationException();
-	}
+	public E set(int index, E element) {throw new UnsupportedOperationException();}
 
 	@Override
 	public int indexOf(E element) {
-		//TODO
+		Element current = sentinel.next;
+		int index = 0;
+
+		while (current != sentinel) {
+			if(current.object.equals(element)) {
+				return index;
+			}
+			current = current.next;
+			index++;
+		}
 		return -1;
 	}
 
 	@Override
 	public boolean isEmpty() {
-		//TODO
-		return true;
+		return size == 0;
 	}
 
 	@Override
@@ -180,20 +211,26 @@ public class TwoWayCycledOrderedListWithSentinel<E> implements IList<E>{
 
 	@Override
 	public E remove(int index) {
-		//TODO
-		return null;
+		Element current = getElement(index);
+		current.remove();
+		size--;
+		return current.object;
 	}
 
 	@Override
 	public boolean remove(E e) {
-		//TODO
+		Element current = getElement(e);
+		if (current != null){
+			current.remove();
+			size--;
+			return true;
+		}
 		return false;
 	}
 
 	@Override
 	public int size() {
-		//TODO
-		return -1;
+		return size;
 	}
 
 	//@SuppressWarnings("unchecked")
