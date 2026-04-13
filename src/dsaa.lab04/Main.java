@@ -127,7 +127,12 @@ public class Main {
 				int number=Integer.parseInt(word[1]);
 				doc[currentDocNo].link.add(doc[number].link);
 				continue;
-			}				
+			}
+			if(word[0].equalsIgnoreCase("sub") && word.length==2) {
+				int number=Integer.parseInt(word[1]);
+				doc[currentDocNo].link.setSubOther(doc[number].link);
+				continue;
+			}
 			System.out.println("Wrong command");			
 		}
 		System.out.println("END OF EXECUTION");

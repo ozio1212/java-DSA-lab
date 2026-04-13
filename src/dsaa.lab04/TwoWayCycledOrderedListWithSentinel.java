@@ -4,17 +4,19 @@ import java.util.Iterator;
 import java.util.ListIterator;
 import java.util.NoSuchElementException;
 
-public class TwoWayCycledOrderedListWithSentinel<E> implements IList<E>{
+public class TwoWayCycledOrderedListWithSentinel<E> implements IList<E> {
 
-	private class Element{
+	private class Element {
 		public Element(E e) {
 			this.object = e;
 		}
+
 		public Element(E e, Element next, Element prev) {
 			this.object = e;
 			this.next = next;
 			this.prev = prev;
 		}
+
 		// add element e after this
 		public void addAfter(Element elem) {
 			elem.next = this.next;
@@ -22,9 +24,10 @@ public class TwoWayCycledOrderedListWithSentinel<E> implements IList<E>{
 			this.next.prev = elem;
 			this.next = elem;
 		}
+
 		// assert it is NOT a sentinel
 		public void remove() {
-			if (this == sentinel){
+			if (this == sentinel) {
 				return;
 			}
 			this.prev.next = this.next;
@@ -32,15 +35,15 @@ public class TwoWayCycledOrderedListWithSentinel<E> implements IList<E>{
 		}
 
 		E object;
-		Element next=null;
-		Element prev=null;
+		Element next = null;
+		Element prev = null;
 	}
 
 	// pola listy
 	Element sentinel;
 	int size;
 
-	private class InnerIterator implements Iterator<E>{
+	private class InnerIterator implements Iterator<E> {
 
 		Element pos;
 
@@ -62,7 +65,7 @@ public class TwoWayCycledOrderedListWithSentinel<E> implements IList<E>{
 		}
 	}
 
-	private class InnerListIterator implements ListIterator<E>{
+	private class InnerListIterator implements ListIterator<E> {
 
 		Element current;
 
@@ -109,10 +112,12 @@ public class TwoWayCycledOrderedListWithSentinel<E> implements IList<E>{
 		public int previousIndex() {
 			throw new UnsupportedOperationException();
 		}
+
 		@Override
 		public void remove() {
 			throw new UnsupportedOperationException();
 		}
+
 		@Override
 		public void set(E arg0) {
 			throw new UnsupportedOperationException();
@@ -147,7 +152,7 @@ public class TwoWayCycledOrderedListWithSentinel<E> implements IList<E>{
 			throw new NoSuchElementException();
 		}
 		Element current = sentinel.next;
-		for (int i  = 0; i < index; i++) {
+		for (int i = 0; i < index; i++) {
 			current = current.next;
 		}
 		return current;
@@ -166,7 +171,9 @@ public class TwoWayCycledOrderedListWithSentinel<E> implements IList<E>{
 	}
 
 	@Override
-	public void add(int index, E element) {throw new UnsupportedOperationException();}
+	public void add(int index, E element) {
+		throw new UnsupportedOperationException();
+	}
 
 	@Override
 	public void clear() {
@@ -186,7 +193,9 @@ public class TwoWayCycledOrderedListWithSentinel<E> implements IList<E>{
 	}
 
 	@Override
-	public E set(int index, E element) {throw new UnsupportedOperationException();}
+	public E set(int index, E element) {
+		throw new UnsupportedOperationException();
+	}
 
 	@Override
 	public int indexOf(E element) {
@@ -194,7 +203,7 @@ public class TwoWayCycledOrderedListWithSentinel<E> implements IList<E>{
 		int index = 0;
 
 		while (current != sentinel) {
-			if(current.object.equals(element)) {
+			if (current.object.equals(element)) {
 				return index;
 			}
 			current = current.next;
@@ -229,7 +238,7 @@ public class TwoWayCycledOrderedListWithSentinel<E> implements IList<E>{
 	@Override
 	public boolean remove(E e) {
 		Element current = getElement(e);
-		if (current != null){
+		if (current != null) {
 			current.remove();
 			size--;
 			return true;
@@ -242,7 +251,6 @@ public class TwoWayCycledOrderedListWithSentinel<E> implements IList<E>{
 		return size;
 	}
 
-	@SuppressWarnings("unchecked")
 	public void add(TwoWayCycledOrderedListWithSentinel<E> other) {
 
 		if (this == other || other.isEmpty()) return;
@@ -267,8 +275,7 @@ public class TwoWayCycledOrderedListWithSentinel<E> implements IList<E>{
 
 		other.clear();
 	}
-	
-	//@SuppressWarnings({ "unchecked", "rawtypes" })
+
 	public void removeAll(E e) {
 		Element current = sentinel.next;
 
@@ -284,5 +291,41 @@ public class TwoWayCycledOrderedListWithSentinel<E> implements IList<E>{
 		}
 	}
 
+	public void setSubOther(TwoWayCycledOrderedListWithSentinel<E> other) {
+
+		// te same listy
+		if (this == other) {
+			this.clear();
+			return;
+		}
+
+		// obie puste
+		if (this.isEmpty() || other.isEmpty()) return;
+
+		Element current = this.sentinel.next;
+		Element otherCurrent = other.sentinel.next;
+
+		while (current != this.sentinel && otherCurrent != other.sentinel) {
+
+			Comparable<E> otherComp = (Comparable<E>) otherCurrent.object;
+			int comp = otherComp.compareTo(current.object);
+
+			if (comp > 0) {
+				current = current.next;
+
+			} else if (comp < 0) {
+				otherCurrent = otherCurrent.next;
+
+			} else {
+				// comp = 0 -> te same elementy
+				Element next = current.next;
+				current.remove();
+				this.size--;
+
+				current = next;
+				otherCurrent = otherCurrent.next;
+			}
+		}
+	}
 }
 
