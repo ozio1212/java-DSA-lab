@@ -60,7 +60,7 @@ public class Main {
 			if(word[0].equalsIgnoreCase("reverse") && word.length==1) {
 				System.out.println(doc[currentDocNo].toStringReverse());
 				continue;
-			}				// size
+			}               // size
 			if(word[0].equalsIgnoreCase("size") && word.length==1) {
 				System.out.println(doc[currentDocNo].link.size());
 				continue;
@@ -164,9 +164,13 @@ public class Main {
 			if(word[0].equalsIgnoreCase("radixsort") && word.length==1) {
 				doc[currentDocNo].radixSort(doc[currentDocNo].getWeights());
 				continue;
-			}	
+			}
+            if(word[0].equalsIgnoreCase("radixsortbin") && word.length==1) {
+                doc[currentDocNo].radixSortBin(doc[currentDocNo].getWeights());
+                continue;
+            }
 
-			System.out.println("Wrong command");			
+            System.out.println("Wrong command");
 		}
 		System.out.println("END OF EXECUTION");
 		scan.close();

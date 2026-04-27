@@ -306,4 +306,54 @@ public class Document{
 			arr[i] = output[i];
 		}
 	}
+
+	public void radixSortBin(int[] arr){
+		showArray(arr);
+
+		// max ilosc bitow
+		int max = 0;
+		for (int n : arr){
+			if (n > max){
+				max = n;
+			}
+		}
+
+		int[] output = new int[arr.length];
+
+		int bit = 0;
+
+		while ((max >> bit) > 0) {
+
+			int count0 = 0;
+
+			for (int i = 0; i < arr.length; i++) {
+				if (((arr[i] >> bit) & 1) == 0) {
+					count0++;
+				}
+			}
+
+			// indeksy startowe dla zliczaczy
+			int index0 = 0;
+			int index1 = count0;
+
+			// rozdzielenie liczb
+			for (int i = 0; i < arr.length; i++) {
+				if (((arr[i] >> bit) & 1) == 0) {
+					output[index0++] = arr[i]; // zera
+				} else {
+					output[index1++] = arr[i]; // jedynki
+				}
+			}
+
+			// kopiujemy wszystko do naszego arraya
+			for (int i = 0; i < arr.length; i++) {
+				arr[i] = output[i];
+			}
+
+			showArray(arr);
+
+			bit++;
+		}
+
+	}
 }
