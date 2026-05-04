@@ -152,7 +152,14 @@ public class Main {
 			if(word[0].equalsIgnoreCase("ht") && word.length==1) {
 				System.out.print(hashTable.toString());	
 				continue;
-			}	
+			}
+
+			if(word[0].equalsIgnoreCase("remove") && word.length==2) {
+				Document docToRemove = new Document(word[1]);
+				hashTable.remove(docToRemove);
+				System.out.print(hashTable.toString());
+				continue;
+			}
 
 			System.out.println("Wrong command");			
 		}

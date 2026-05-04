@@ -8,6 +8,7 @@ public class HashTable{
 	private final static double defaultMaxLoadFactor=0.7;
 	private int size;	
 	private final double maxLoadFactor;
+    private final static double deafultMinLoadFactor =0.5;
 
 	public HashTable() {
 		this(defaultInitSize);
@@ -107,6 +108,47 @@ public class HashTable{
 		}
 		return null;
 	}
-	
+
+    public boolean remove(Object elem){
+
+        int hashIndex = Math.abs(elem.hashCode()) % arr.length;
+
+        LinkedList list = arr[hashIndex];
+
+        // nie ma takiego elementu
+        if (!list.contains(elem)){
+            return false;
+        }
+
+        list.remove(elem);
+        size--;
+
+        double currentLoadFactor = (double) size /arr.length;
+        if(currentLoadFactor < deafultMinLoadFactor){
+            halfArray();
+        }
+
+        return true;
+    }
+
+    private void halfArray() {
+
+        int newCapacity = arr.length / 2;
+        LinkedList[] newArr = new LinkedList[newCapacity];
+
+        for (int i = 0; i < newCapacity; i++){
+            newArr[i] = new LinkedList();
+        }
+
+        for (int i = 0; i < arr.length; i++){
+            for (Object e : arr[i]){
+                int hashIndex = Math.abs(e.hashCode()) % newCapacity;
+                newArr[hashIndex].add(e);
+            }
+        }
+
+        this.arr = newArr;
+    }
+
 }
 
