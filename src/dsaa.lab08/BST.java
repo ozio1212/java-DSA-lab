@@ -1,7 +1,5 @@
 package dsaa.lab08;
 
-import java.util.NoSuchElementException;
-
 public class BST<T> {
 	private class Node{
 		T value;
@@ -32,11 +30,11 @@ public class BST<T> {
 
 		while(current != null){
 
-			int comp = searchKey.compareTo(current.value);
+			int cmp = searchKey.compareTo(current.value);
 
-			if(comp == 0){
+			if(cmp == 0){
 				return current.value;
-			} else if (comp < 0){
+			} else if (cmp < 0){
 				current = current.left;
 			} else {
 				current = current.right;
