@@ -205,7 +205,6 @@ public class BST<T> {
 
 	private String formatOutput(StringBuilder sb) {
 		if (sb.length() > 0) {
-			// Usuwamy ostatni przecinek i spację (", ")
 			sb.setLength(sb.length() - 2);
 		}
 		return sb.toString();
