@@ -167,7 +167,6 @@ public class BST<T> {
 		return size;
 	}
 
-	// clean code 😎
 
 	private Node findNode(T value) {
 		Node current = root;
@@ -208,6 +207,40 @@ public class BST<T> {
 			sb.setLength(sb.length() - 2);
 		}
 		return sb.toString();
+	}
+
+	public void removeBigger(T value){
+
+		if (root == null) return;
+		Comparable<T> key = (Comparable<T>) value;
+
+		while (root != null && key.compareTo(root.value) < 0) {
+			root = root.left;
+		}
+
+		// jesli kazdy eleemnt byl wiekszy to puste drzewo
+		if (root == null) {
+			size = 0;
+			return;
+		}
+
+		root.parent = null;
+
+		// sprawdzenie prawej strony roota
+		Node current = root;
+		while (current != null) {
+			if (current.right != null && key.compareTo(current.right.value) < 0) {
+				Node leftOfRight = current.right.left;
+				current.right = leftOfRight;
+
+				if (leftOfRight != null) {
+					leftOfRight.parent = current;
+				}
+
+			} else {
+				current = current.right;
+			}
+		}
 	}
 
 }
