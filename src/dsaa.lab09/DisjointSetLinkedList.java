@@ -14,31 +14,80 @@ public class DisjointSetLinkedList implements DisjointSetDataStructure {
 	Element arr[];
 	
 	public DisjointSetLinkedList(int size) {
-		//TODO
+		arr = new Element[size];
+		for (int i = 0; i < size; i++) {
+			arr[i] = new Element();
+		}
 	}
 	
 	@Override
 	public void makeSet(int item) {
-		//TODO
+		arr[item].representant = item;
+		arr[item].next = NULL;
+		arr[item].length = 1;
+		arr[item].last = item;
 	}
 
 	@Override
 	public int findSet(int item) {
-		//TODO
-		return -1;
+		return arr[item].representant;
 	}
 
 	@Override
 	public boolean union(int itemA, int itemB) {
-		//TODO
-		return false;
+		int repA = findSet(itemA);
+		int repB = findSet(itemB);
+
+		if (repA == repB) return false;
+
+		int lenA = arr[repA].length;
+		int lenB = arr[repB].length;
+
+		if (lenA >= lenB) {
+			append(repA, repB);
+		} else {
+			append(repB, repA);
+		}
+		return true;
 	}
 
-	
+    private void append(int repA, int repB) {
+		int tailOfMain = arr[repA].last;
+		arr[tailOfMain].next = repB;
+
+		arr[repA].last = arr[repB].last;
+
+		arr[repA].length += arr[repB].length;
+
+		int curr = repB;
+		while (curr != NULL) {
+			arr[curr].representant = repA;
+			curr = arr[curr].next;
+		}
+	}
+
+
 	@Override
 	public String toString() {
-		//TODO
-		return null;
+		StringBuilder sb = new StringBuilder("Disjoint sets as linked list:\n");
+		boolean firstLine = true;
+
+		for (int i = 0; i < arr.length; i++) {
+			if (arr[i].representant == i) {
+				if (!firstLine) sb.append("\n");
+
+				int curr = i;
+				boolean firstElem = true;
+				while (curr != NULL) {
+					if (!firstElem) sb.append(", ");
+					sb.append(curr);
+					firstElem = false;
+					curr = arr[curr].next;
+				}
+				firstLine = false;
+			}
+		}
+		return sb.toString();
 	}
 
 }
