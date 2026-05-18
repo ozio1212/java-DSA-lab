@@ -51,17 +51,17 @@ public class DisjointSetLinkedList implements DisjointSetDataStructure {
 		return true;
 	}
 
-    private void append(int repA, int repB) {
-		int tailOfMain = arr[repA].last;
-		arr[tailOfMain].next = repB;
+    private void append(int mainRep, int appendedRep) {
+		int tailOfMain = arr[mainRep].last;
+		arr[tailOfMain].next = appendedRep;
 
-		arr[repA].last = arr[repB].last;
+		arr[mainRep].last = arr[appendedRep].last;
 
-		arr[repA].length += arr[repB].length;
+		arr[mainRep].length += arr[appendedRep].length;
 
-		int curr = repB;
+		int curr = appendedRep;
 		while (curr != NULL) {
-			arr[curr].representant = repA;
+			arr[curr].representant = mainRep;
 			curr = arr[curr].next;
 		}
 	}
