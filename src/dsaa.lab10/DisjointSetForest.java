@@ -1,45 +1,77 @@
 package dsaa.lab10;
 
 public class DisjointSetForest implements DisjointSetDataStructure {
-	
-	class Element{
+
+	private class Element{
 		int rank;
 		int parent;
 	}
 
 	Element []arr;
-	
+
 	public DisjointSetForest(int size) {
-		//TODO
+		arr = new Element[size];
+		for (int i = 0; i < size; i++) {
+			arr[i] = new Element();
+		}
 	}
-	
+
 	@Override
 	public void makeSet(int item) {
-		//TODO
+		arr[item].parent = item;
+		arr[item].rank = 0;
 	}
 
 	@Override
 	public int findSet(int item) {
-		//TODO
-		return -1;
+		if (item != arr[item].parent) {
+			arr[item].parent = findSet(arr[item].parent);
+		}
+		return arr[item].parent;
 	}
 
 	@Override
 	public boolean union(int itemA, int itemB) {
-		//TODO
-		return false;
-	}
+		int rootA = findSet(itemA);
+		int rootB = findSet(itemB);
 
-	
-	@Override
-	public String toString() {
-		//TODO
-		return null;
+		if (rootA == rootB) return false;
+
+		if (arr[rootA].rank < arr[rootB].rank) {
+			arr[rootA].parent = rootB;
+		} else if (arr[rootA].rank > arr[rootB].rank) {
+			arr[rootB].parent = rootA;
+		} else {
+			arr[rootA].parent = rootB;
+			arr[rootB].rank++;
+		}
+		return true;
 	}
 
 	@Override
 	public int countSets() {
-		// TODO 
-		return -1;
+		int count = 0;
+		// Korzeniem zbioru jest element, który jest swoim własnym rodzicem.
+		// Wystarczy policzyć takie korzenie, by znać ilość "wysp".
+		for (int i = 0; i < arr.length; i++) {
+			if (arr[i].parent == i) {
+				count++;
+			}
+		}
+		return count;
+	}
+
+
+	@Override
+	public String toString() {
+		StringBuilder sb = new StringBuilder("Disjoint sets as forest:\n");
+		for (int i = 0; i < arr.length; i++) {
+			sb.append(i).append(" -> ").append(arr[i].parent);
+			if (i < arr.length - 1) {
+				sb.append("\n");
+			}
+		}
+		return sb.toString();
 	}
 }
+
