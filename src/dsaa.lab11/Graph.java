@@ -134,7 +134,7 @@ public class Graph {
 		// główna pętla
 		for (int count = 0; count < V; count++) {
 
-			// 3a. ZACHŁANNE SZUKANIE: Znajdź nieodwiedzony wierzchołek z NAJMNIEJSZYM dystansem
+			// szukanie wierzcholka z najmniejszym dystansem
 			int u = -1;
 			int minDistance = Integer.MAX_VALUE;
 
