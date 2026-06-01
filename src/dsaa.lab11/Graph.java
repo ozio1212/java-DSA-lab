@@ -149,6 +149,7 @@ public class Graph {
 
 			visited[u] = true;
 
+            // relaksacja
 			for (int v = 0; v < V; v++) {
 				if (!visited[v] && arr[u][v] >= 0 && dist[u] != Integer.MAX_VALUE) {
 					if (dist[u] + arr[u][v] < dist[v]) {
