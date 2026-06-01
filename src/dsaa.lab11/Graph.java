@@ -121,7 +121,7 @@ public class Graph {
 
 		// struktury pomocnicze algorytmu
 		int[] dist = new int[V];    // przechowuje najkrótszy dystans z wierzchołka startowego
-		int[] prev = new int[V];    // przechowuje indeks poprzednika (do odtwarzania ścieżki)
+		int[] prev = new int[V];    // przechowuje indeks poprzednika
 		boolean[] visited = new boolean[V]; // zaznacza, dla których wierzchołków znamy już ostateczny dystans
 
 		// inicjalizacja wartości początkowych
