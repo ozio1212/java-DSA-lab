@@ -139,38 +139,27 @@ public class Graph {
 			int minDistance = Integer.MAX_VALUE;
 
 			for (int i = 0; i < V; i++) {
-				// Skoro iterujemy 'i' od 0 do V, automatycznie przestrzegamy zasady PORZĄDKU LEKSYKOGRAFICZNEGO,
-				// gdyby istniały dwa węzły o takim samym minimalnym dystansie.
 				if (!visited[i] && dist[i] < minDistance) {
 					minDistance = dist[i];
 					u = i;
 				}
 			}
 
-			// Jeśli u == -1, oznacza to, że nie ma już żadnych osiągalnych wierzchołków
-			// (reszta grafu to oddzielna "wyspa"). Możemy zakończyć poszukiwania.
 			if (u == -1) break;
 
-			// 3b. Odwiedzamy znaleziony wierzchołek
 			visited[u] = true;
 
-			// 3c. RELAKSACJA: Aktualizujemy odległości do wszystkich sąsiadów wierzchołka 'u'
 			for (int v = 0; v < V; v++) {
-				// Rozpatrujemy węzeł 'v' tylko jeśli:
-				// - nie był odwiedzony (!visited[v])
-				// - krawędź u -> v istnieje (arr[u][v] >= 0)
-				// - odległość do 'u' nie jest nieskończonością (co gwarantujemy wybierając 'u' wyżej)
 				if (!visited[v] && arr[u][v] >= 0 && dist[u] != Integer.MAX_VALUE) {
-					// Jeśli droga przez 'u' jest KRÓTSZA niż bezpośrednio / stara znana droga do 'v'
 					if (dist[u] + arr[u][v] < dist[v]) {
-						dist[v] = dist[u] + arr[u][v]; // Aktualizuj minimalny dystans
-						prev[v] = u;                   // Zapamiętaj, że do 'v' najlepiej dojść z 'u'
+						dist[v] = dist[u] + arr[u][v];
+						prev[v] = u;
 					}
 				}
 			}
 		}
 
-		// 4. budowanie wyniku tekstowego do fancy printa
+		// budowanie wyniku tekstowego do fancy printa
 		StringBuilder sb = new StringBuilder();
 
 		// iterujemy po kolei (w porządku leksykograficznym)
