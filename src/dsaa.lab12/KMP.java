@@ -45,7 +45,7 @@ public class KMP implements IStringMatcher {
 			if (q == m) {
 
 				result.add(i - m + 1);
-				
+
 				q = pi[q - 1];
 			}
 		}
