@@ -5,7 +5,16 @@ import java.util.Scanner;
 
 public class PointsReader {
 	static LinkedList<Point> load(Scanner scan,int nrOfPoints){
-		//TODO
-		return null;
+
+		LinkedList<Point> points = new LinkedList<>();
+
+		for (int i = 0; i < nrOfPoints; i++) {
+			long x = scan.nextLong();
+			long y = scan.nextLong();
+
+			points.add(new Point(x, y));
+		}
+
+		return points;
 	}
 }
