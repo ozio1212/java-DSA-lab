@@ -32,7 +32,7 @@ public class KMP implements IStringMatcher {
 		}
 
 		int q = 0;
-        
+
 		for (int i = 0; i < n; i++) {
 
 			while (q > 0 && pattern.charAt(q) != text.charAt(i)) {
