@@ -16,10 +16,10 @@ public class ConvexHull {
 
 		points.sort((p1, p2) -> {
 
-			long orient = orientation(p0, p1, p2);
+			long orient = calculateOrientation(p0, p1, p2);
 
 			if (orient == 0) {
-				return Long.compare(distSq(p0, p1), distSq(p0, p2));
+				return Long.compare(calculateDistSq(p0, p1), calculateDistSq(p0, p2));
 			}
 
 			return orient > 0 ? -1 : 1;
@@ -30,7 +30,7 @@ public class ConvexHull {
 
 		for (int i = 0; i < points.size(); i++) {
 
-			while (i < points.size() - 1 && orientation(p0, points.get(i), points.get(i + 1)) == 0) {
+			while (i < points.size() - 1 && calculateOrientation(p0, points.get(i), points.get(i + 1)) == 0) {
 				i++;
 			}
 
@@ -55,7 +55,7 @@ public class ConvexHull {
 				Point nextToTop = stack.peek();
 
 
-				if (orientation(nextToTop, top, filtered.get(i)) > 0) {
+				if (calculateOrientation(nextToTop, top, filtered.get(i)) > 0) {
 					stack.push(top);
 					break;
 				}
@@ -67,11 +67,11 @@ public class ConvexHull {
 		return new LinkedList<>(stack);
 	}
 
-	private static long orientation(Point o, Point a, Point b) {
+	private static long calculateOrientation(Point o, Point a, Point b) {
 		return (a.x - o.x) * (b.y - o.y) - (a.y - o.y) * (b.x - o.x);
 	}
 
-	private static long distSq(Point p1, Point p2) {
+	private static long calculateDistSq(Point p1, Point p2) {
 		return (p1.x - p2.x) * (p1.x - p2.x) + (p1.y - p2.y) * (p1.y - p2.y);
 	}
 
